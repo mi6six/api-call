@@ -1,5 +1,6 @@
 // script.js
 let page = 1;
+let imagesPerPage = getImagesPerPage(); // Set images per page based on screen size
 
 document.addEventListener("DOMContentLoaded", () => {
   const imageContainer = document.getElementById("image-container");
@@ -7,9 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextButton = document.getElementById("next");
 
   // Fetch and display images
-  const fetchImages = async (pageNum) => {
+  const fetchImages = async (pageNum, limit) => {
     try {
-      const response = await fetch(`https://picsum.photos/v2/list?page=${pageNum}&limit=5`);
+      const response = await fetch(`https://picsum.photos/v2/list?page=${pageNum}&limit=${limit}`);
       if (!response.ok) {
         if (response.status === 404) throw new Error("Images not found.");
         else if (response.status === 503) throw new Error("Service unavailable.");
@@ -33,11 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  // Determine images per page based on screen width
+  function getImagesPerPage() {
+    if (window.innerWidth > 1200) return 10; // Large screens
+    if (window.innerWidth > 768) return 6;   // Medium screens
+    return 3;                               // Small screens
+  }
+
   // Handle pagination buttons
   prevButton.addEventListener("click", () => {
     if (page > 1) {
       page--;
-      fetchImages(page);
+      fetchImages(page, imagesPerPage);
       nextButton.disabled = false;
     }
     prevButton.disabled = page === 1;
@@ -45,10 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nextButton.addEventListener("click", () => {
     page++;
-    fetchImages(page);
+    fetchImages(page, imagesPerPage);
     prevButton.disabled = false;
   });
 
+  // Update imagesPerPage if window is resized
+  window.addEventListener("resize", () => {
+    imagesPerPage = getImagesPerPage();
+    fetchImages(page, imagesPerPage); // Refresh images on resize
+  });
+
   // Initial fetch
-  fetchImages(page);
+  fetchImages(page, imagesPerPage);
 });
