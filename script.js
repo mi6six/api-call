@@ -1,5 +1,5 @@
 let currentPage = 1;
-let totalPages = 10; // Modify based on available images
+let totalPages = 10; // Adjust this based on available images
 const imagesPerPage = 6; // Display 6 images per page
 const imageGrid = document.getElementById('imageGrid');
 const prevButton = document.getElementById('prevPage');
@@ -12,8 +12,7 @@ function fetchImages() {
 
     // Loop to fetch multiple images
     for (let i = 0; i < imagesPerPage; i++) {
-        const imageId = (currentPage - 1) * imagesPerPage + i + 1;
-        if (imageId > totalPages) break; // Prevent going over total available images
+        const imageId = Math.floor(Math.random() * totalPages) + 1; // Generate a random image ID
 
         fetch(`https://picsum.photos/id/${imageId}/300/200`)
             .then(response => {
@@ -35,9 +34,9 @@ function fetchImages() {
             });
     }
 
-    // Manage pagination state
+    // Update pagination state
     prevButton.disabled = currentPage === 1;
-    nextButton.disabled = currentPage >= Math.ceil(totalPages / imagesPerPage);
+    nextButton.disabled = false; // Enable next button since we can load more new random images
 }
 
 function changePage(direction) {
@@ -46,12 +45,19 @@ function changePage(direction) {
     } else if (direction === 'prev') {
         currentPage--;
     }
-    fetchImages();
+    
+    fetchImages(); // Fetch new images on page change
 }
 
-// Event listeners for pagination buttons
+// Event listeners for the buttons
 prevButton.addEventListener('click', () => changePage('prev'));
 nextButton.addEventListener('click', () => changePage('next'));
+
+// Fetch random images on button click
+document.getElementById('fetchImage').addEventListener('click', () => {
+    currentPage = 1; // Reset to the first page
+    fetchImages(); // Fetch new images
+});
 
 // Initial load
 fetchImages();
