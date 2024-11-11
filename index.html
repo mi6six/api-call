@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Single Image Slider</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Image Gallery</title>
 </head>
-<body>
-  <input type="radio" id="trigger1" name="slider" checked>
-  <label for="trigger1"><span class="sr-only">Slide 1</span></label>
-  <div class="slide bg1"></div>
+<body class="bg-gray-100">
+    <header class="bg-blue-600 text-white p-4 shadow">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-lg font-bold">Image Gallery</div>
+            <nav>
+                <ul class="flex space-x-4">
+                    <li><button id="fetchImage" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Fetch Random Images</button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container mx-auto mt-6">
+        <section id="imageSection">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="imageGrid"></div>
+            <div class="flex justify-between mt-4">
+                <button id="prevPage" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" disabled>Previous</button>
+                <button id="nextPage" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Next</button>
+            </div>
+        </section>
+        <div id="error" class="text-red-500 text-center mt-4"></div>
+    </main>
 
-  <input type="radio" id="trigger2" name="slider">
-  <label for="trigger2"><span class="sr-only">Slide 2</span></label>
-  <div class="slide bg2"></div>
+    <footer class="bg-blue-600 text-white text-center p-4 mt-6">
+        <p>© 2023 Image Gallery. All rights reserved.</p>
+    </footer>
 
-  <input type="radio" id="trigger3" name="slider">
-  <label for="trigger3"><span class="sr-only">Slide 3</span></label>
-  <div class="slide bg3"></div>
-
-  <input type="radio" id="trigger4" name="slider">
-  <label for="trigger4"><span class="sr-only">Slide 4</span></label>
-  <div class="slide bg4"></div>
-
-  <input type="radio" id="trigger5" name="slider">
-  <label for="trigger5"><span class="sr-only">Slide 5</span></label>
-  <div class="slide bg5"></div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
