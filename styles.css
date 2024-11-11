@@ -1,44 +1,87 @@
-body {
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+/* Reset styles */
+body, html {
+  padding: 0;
   margin: 0;
-  background-color: #f4f4f4;
-}
-
-#gallery {
+  width: 100%;
+  height: 100%;
   text-align: center;
-  width: 90%;
-  max-width: 800px;
-  margin: 20px;
+  overflow: hidden;
+  user-select: none;
 }
 
-#image-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
+.sr-only {
+  position: absolute;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  color: transparent;
 }
 
-#image-container img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
+/* Styling for hidden radio buttons */
+input {
+  position: absolute;
+  opacity: 0;
 }
 
-#pagination {
-  margin-top: 15px;
-}
-
-#pagination button {
-  padding: 8px 16px;
-  margin: 5px;
+/* Arrow button styles */
+label {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: solid 2px white;
+  border-radius: 999px;
+  background-color: transparent;
+  margin: 95vh 6px 0 6px;
   cursor: pointer;
+  transition-duration: .4s;
+  box-shadow: 0 0 20px 0 #000;
 }
 
-#pagination button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
+input:checked + label {
+  background-color: white;
 }
+
+/* Arrow SVG icon styling */
+input + label::after {
+  content: '';
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512' width='100' style='fill:white'><path d='M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center 55%;
+  background-size: 80px 80px;
+  position: absolute;
+  width: 80px;
+  height: calc(95vh - 12px);
+  top: 0;
+  z-index: 20;
+}
+
+input:checked ~ .slide {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Each slide style */
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 100%;  /* Offscreen initially */
+  opacity: 0;
+  transition: transform .4s, opacity .4s;
+  background-size: cover;
+  background-position: center;
+}
+
+input:checked + label + .slide {
+  left: 0;
+  opacity: 1;
+}
+
+/* Background images */
+.bg1 { background-image: url('https://images.unsplash.com/photo-1422806310414-91469fe4977e'); }
+.bg2 { background-image: url('https://images.unsplash.com/photo-1490020641477-3b0e96306b9a'); }
+.bg3 { background-image: url('https://images.unsplash.com/photo-1512529111457-3e8a595ef8e9'); }
+.bg4 { background-image: url('https://images.unsplash.com/photo-1504700610630-ac6aba3536d3'); }
+.bg5 { background-image: url('https://images.unsplash.com/reserve/wPCyys8TPCHY3GXm2N2D_ssp_inthewoods_1'); }
